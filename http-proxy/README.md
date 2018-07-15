@@ -3,7 +3,7 @@
 请求数据返回浏览器端。
 
 ## 安装依赖
-Demo使用的网易云音乐搜索接口，使用flask框架，和musicbox[https://github.com/darknessomi/musicbox](musicbox)加密部分.
+Demo使用的网易云音乐搜索接口，使用flask框架，和[musicbox](https://github.com/darknessomi/musicbox)加密部分.
 ```
 pip install flask,requests,pycryptodomex,future
 ```
