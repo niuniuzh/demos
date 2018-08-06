@@ -9,7 +9,7 @@ gulp.task('sprite', function () {
     console.log(plugins);
     var spriteData = gulp.src('./src/images/*.png').pipe(plugins.spritesmith({
         imgName: 'sprite.png',
-        cssName: 'sprite.scss'
+        cssName: 'sprite.css'
     }));
     var imgStream = spriteData.img
         .pipe(buffer())
@@ -18,3 +18,9 @@ gulp.task('sprite', function () {
         .pipe(gulp.dest('./src/dest/css/'));
     return merge(imgStream, cssStream);
 })
+
+gulp.task('watch',function(){
+    gulp.watch('src/images/*.png',['sprite']);
+})
+
+gulp.task('default',['sprite'])
