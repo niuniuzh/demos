@@ -9,3 +9,7 @@
 
 将下载的字体解压，拷贝css、webfonts到项目目录下，
 在head中引入css即可。
+
+### 预览
+
+打开index.html即可预览。
