@@ -1,0 +1,6 @@
+@import "sprite";
+.pos_icon{ @include sprite($-pos-0054);}
+.weibo_icon{ @include sprite($icon-weibo); }
+.qq_icon{ @include sprite($icon-qq); }
+.douban_icon{ @include sprite($icon-douban); }
+.renren_icon{ @include sprite($icon-renren); }
