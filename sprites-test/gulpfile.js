@@ -30,8 +30,8 @@ gulp.task('default', ['sprite'])
 gulp.task('sprite-scss', function () {
     var spriteData = gulp.src('./src/images/*.png').pipe(plugins.spritesmith({
         imgName: 'sprite.png',
-        cssName: 'sprite.scss',
-        cssTemplate: './handlebarsStr.hbs',
+        cssName: '_sprite.scss',
+        // cssTemplate: './handlebarsStr.hbs',
         imgPath: '../images/' + 'sprite.png'
     }));
     var imgStream = spriteData.img
@@ -52,7 +52,7 @@ gulp.task('sass', function () {
 })
 
 gulp.task('sass:watch', function () {
-    // gulp.watch('src/images/*.png', ['sprite-scss']);
+    gulp.watch('src/images/*.png', ['sprite-scss']);
     gulp.watch('src/dest/css/*.scss', ['sass']);
 });
 
