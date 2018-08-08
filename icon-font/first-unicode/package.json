@@ -1,0 +1,17 @@
+{
+  "name": "first-unicode",
+  "version": "1.0.0",
+  "description": "icon test",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "missnote",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-iconfont": "^10.0.1",
+    "gulp-iconfont-css": "^2.3.0"
+  }
+}
