@@ -15,3 +15,5 @@
 *** 上传图片
 *** 阻止用户在发文章或评论时输入带 HTML 或 JavaScript 的内容
 *** 防范 SQL 注入
+
+(http://blog.thefirehoseproject.com/posts/learn-to-code-and-be-self-reliant/)
