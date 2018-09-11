@@ -245,3 +245,52 @@ c = complex(re, im)
 # 重复字符串
 * Repeat 用于重复 count 次字符串 s 并返回一个新的字符串：
   * strings.Repeat(s, count int) string
+
+# 修改字符串大小写
+* ToLower 将字符串中的 Unicode 字符全部转换为相应的小写字符:strings.ToLower(s) string
+* ToUpper 将字符串中的 Unicode 字符全部转换为相应的大写字符：strings.ToUpper(s) string
+
+# 修剪字符串
+* strings.TrimSpace(s) 来剔除字符串开头和结尾的空白符号
+* strings.Trim(s, "cut") 来将开头和结尾的 cut 去除掉
+* 如果你只想剔除开头或者结尾的字符串，则可以使用 TrimLeft 或者 TrimRight 来实现
+
+# 分割字符串
+* strings.Fields(s) 将会利用 1 个或多个空白符号来作为动态长度的分隔符将字符串分割成若干小块
+* strings.Split(s, sep) 用于自定义分割符号来对指定字符串进行分割
+
+# 拼接 slice 到字符串
+* Join 用于将元素类型为 string 的 slice 使用分割符号来拼接组成一个字符串：
+  * strings.Join(sl []string, sep string) string
+
+# 从字符串中读取内容
+* strings.NewReader(str) 用于生成一个 Reader 并读取字符串中的内容，然后返回指向该 Reader 的指针
+  * Read() 从 []byte 中读取内容
+  * ReadByte() 和 ReadRune() 从字符串中读取下一个 byte 或者 rune
+
+# 字符串与其它类型的转换
+* 字符串相关的类型转换都是通过 strconv 包实现的,任何类型 T 转换为字符串总是成功的
+* 针对从数字类型转换到字符串，Go 提供了以下函数：
+  * strconv.Itoa(i int) string 返回数字 i 所表示的字符串类型的十进制数
+  * strconv.FormatFloat(f float64, fmt byte, prec int, bitSize int) string 将 64 位浮点型的数字转换为字符串
+  * fmt 表示格式（其值可以是 'b'、'e'、'f' 或 'g'），prec 表示精度，bitSize 则使用 32 表示 float32，用 64 表示 float64
+* 针对从字符串类型转换为数字类型，Go 提供了以下函数:
+  * strconv.Atoi(s string) (i int, err error) 将字符串转换为 int 型
+  * strconv.ParseFloat(s string, bitSize int) (f float64, err error) 将字符串转换为 float64 型
+  * 这些函数会返回 2 个值，第 1 个是转换后的结果（如果转换成功），第 2 个是可能出现的错误
+  * val, err = strconv.Atoi(s)
+
+# 时间和日期
+* time 包为我们提供了一个数据类型 time.Time（作为值使用）以及显示和测量时间和日期的功能函数
+* 当前时间可以使用 time.Now() 获取，或者使用 t.Day()、t.Minute() 等等来获取时间的一部分
+* Duration 类型表示两个连续时刻所相差的纳秒数，类型为 int64。Location 类型映射某个时区的时间，UTC 表示通用协调世界时间
+
+# 指针
+* 程序在内存中存储它的值，每个内存块（或字）有一个地址，通常用十六进制数表示
+* Go 语言的取地址符是 &，放到一个变量前使用就会返回相应变量的内存地址
+* 你可以在指针类型前面加上 * 号（前缀）来获取指针所指向的内容，这里的 * 号是一个类型更改器
+* 你不能得到一个文字或常量的地址,
+* const i = 5
+* ptr := &i //error: cannot take the address of i
+* ptr2 := &10 //error: cannot take the address of 10
+* 移动指针指向字符串的字节数或数组的某个位置）是不被允许
