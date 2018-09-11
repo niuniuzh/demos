@@ -18,3 +18,28 @@
 mp1 := make(map[int][]int)
 mp2 := make(map[int]*[]int)
 ```
+
+# 测试键值对是否存在及删除元素
+```
+if _, ok := map1[key1]; ok {
+	// ...
+}
+```
+* 从 map1 中删除 key1：直接 delete(map1, key1) 就可以。
+
+# for-range 的配套用法
+```
+for key, value := range map1 {
+	...
+}
+```
+* 第一个返回值 key 是 map 中的 key 值，第二个返回值则是该 key 对应的 value 值；这两个都是仅 for 循环内部可见的局部变量
+
+# map 类型的切片
+* 假设我们想获取一个 map 类型的切片，我们必须使用两次 make() 函数，第一次分配切片，第二次分配 切片中每个 map 元素
+
+# map 的排序
+* 想为 map 排序，需要将 key（或者 value）拷贝到一个切片，再对切片排序
+
+# 将 map 的键值对调
+* 如果 map 的值类型可以作为 key 且所有的 value 是唯一的，那么通过下面的方法可以简单的做到键值对调
