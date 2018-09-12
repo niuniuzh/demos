@@ -40,3 +40,45 @@
 * 通过以下方式，一次性安装，并导入到你的代码中  import goex "codesite.ext/author/goExample/goex"
 
 # 包的初始化:
+* 一个包可能有多个 init 函数甚至在一个源码文件中。它们的执行是无序的。
+
+# 为自定义包使用 godoc
+* godoc工具（第 3.6 节）在显示自定义包中的注释也有很好的效果：注释必须以 // 开始并无空行放在声明（包，类型，函数）前
+* 命令行下进入目录下并输入命令：godoc -http=:6060 -goroot="."  在浏览器打开地址：http://localhost:6060
+
+# 使用 go install 安装自定义包
+* go install 是 Go 中自动包安装工具：如需要将包安装到本地它会从远端仓库下载包：检出、编译和安装一气呵成
+
+# 自定义包的目录结构、go install 和 go test
+# 本地安装包
+* 本地包在用户目录下，使用给出的目录结构，以下命令用来从源码安装本地包
+```
+go install /home/user/goprograms/src/uc # 编译安装uc
+cd /home/user/goprograms/uc
+go install ./uc 	# 编译安装uc（和之前的指令一样）
+cd ..
+go install .	# 编译安装ucmain
+```
+
+# 依赖系统的代码
+# 安装到 GitHub
+```
+git remote add origin git@github.com:NNNN/uc.git  
+git push -u origin master
+```
+
+# 从 GitHub 安装
+* 打开终端并执行（NNNN 是你在 GitHub 上的用户名）：go get github.com/NNNN/uc
+* import uc "github.com/NNNN/uc"  修改 Makefile: 将 TARG=uc 替换为 TARG=github.com/NNNN/uc
+
+# Go 的外部包和项目
+```
+MySQL(GoMySQL), PostgreSQL(go-pgsql), MongoDB (mgo, gomongo), CouchDB (couch-go), ODBC (godbcl), Redis (redis.go) and SQLite3 (gosqlite) database drivers
+SDL bindings
+Google's Protocal Buffers(goprotobuf)
+XML-RPC(go-xmlrpc)
+Twitter(twitterstream)
+OAuth libraries(GoAuth)
+```
+
+# 在 Go 程序中使用外部库
