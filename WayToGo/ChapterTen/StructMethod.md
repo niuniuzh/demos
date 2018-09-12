@@ -80,3 +80,80 @@ func NewFile(fd int, name string) *File {
 * 接收者必须有一个显式的名字，这个名字必须在方法中被使用
 * receiver_type 叫做 （接收者）基本类型，这个类型必须在和方法同样的包中被声明
 * 方法没有和数据定义（结构体）混在一起：它们是正交的类型；表示（数据）和行为（方法）是独立的
+
+# 指针或值作为接收者
+* 指针方法和值方法都可以在指针或非指针上被调用
+
+# 方法和未导出字段
+* 类型 Person 被明确的导出了，但是它的字段没有被导出
+* 提供 getter 和 setter 方法。对于 setter 方法使用 Set 前缀，对于 getter 方法只使用成员名
+```
+package person
+
+type Person struct {
+	firstName string
+	lastName  string
+}
+
+func (p *Person) FirstName() string {
+	return p.firstName
+}
+
+func (p *Person) SetFirstName(newName string) {
+	p.firstName = newName
+}
+package main
+
+import (
+	"./person"
+	"fmt"
+)
+
+func main() {
+	p := new(person.Person)
+	// p.firstName undefined
+	// (cannot refer to unexported field or method firstName)
+	// p.firstName = "Eric"
+	p.SetFirstName("Eric")
+	fmt.Println(p.FirstName()) // Output: Eric
+}
+```
+* 并发访问对象
+* 对象的字段（属性）不应该由 2 个或 2 个以上的不同线程在同一时间去改变。如果在程序发生这种情况，为了安全并发访问，可以使用包 sync（参考第 9.3 节）中的方法
+
+# 内嵌类型的方法和继承
+* 当一个匿名类型被内嵌在结构体中时，匿名类型的可见方法也同样被内嵌，这在效果上等同于外层类型 继承 了这些方法：将父类型放在子类型中来实现亚型
+* 内嵌将一个已存在类型的字段和方法注入到了另一个类型里：匿名字段上的方法“晋升”成为了外层类型的方法
+
+# 如何在类型中嵌入功能
+* 有两种方法来实现在类型中嵌入功能
+* 聚合（或组合）：包含一个所需功能类型的具名字段
+* 内嵌：内嵌（匿名地）所需功能类型
+
+# 多重继承
+* 多重继承指的是类型获得多个父类型行为的能力，
+* 在 Go 语言中，通过在类型中嵌入所有必要的父类型，可以很简单的实现多重继承
+
+# 通用方法和方法命名
+* 在编程中一些基本操作会一遍又一遍的出现，比如打开（Open）、关闭（Close）、读（Read）、写（Write）、排序（Sort）等等
+
+# 和其他面向对象语言比较 Go 的类型和方法
+* 如果方法在此类型定义了，就可以调用它，和其他类型上是否存在这个方法没有关系
+* 在 Go 中，类型就是类（数据和关联的方法）继承有两个好处：代码复用和多态
+* 在 Go 中，代码复用通过组合和委托实现，多态通过接口的使用来实现：有时这也叫 组件编程
+
+# 类型的 String() 方法和格式化描述符
+* 类型定义了 String() 方法，它会被用在 fmt.Printf() 中生成默认的输出
+* 等同于使用格式化描述符 %v 产生的输出。还有 fmt.Print() 和 fmt.Println() 也会自动使用 String() 方法
+* 格式化描述符 %T 会给出类型的完全规格，%#v 会给出实例的完整输出，包括它的字段
+* 不要在 String() 方法里面调用涉及 String() 方法的方法，它会导致意料之外的错误
+
+# 垃圾回收和 SetFinalizer
+* 在 Go 运行时中有一个独立的进程，即垃圾收集器（GC），会处理这些事情，它搜索不再使用的变量然后释放它们的内存
+* 通过调用 runtime.GC() 函数可以显式的触发 GC
+* 想知道当前的内存状态，可以使用：
+```
+var m runtime.MemStats
+runtime.ReadMemStats(&m)
+fmt.Printf("%d Kb\n", m.Alloc / 1024)
+```
