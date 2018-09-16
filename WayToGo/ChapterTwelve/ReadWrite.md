@@ -99,3 +99,8 @@ Channel，复杂类型和函数类型不能被编码
 
 # 用 Gob 传输数据
 * Gob 是 Go 自己的以二进制形式序列化和反序列化程序数据的格式；可以在 encoding 包中找到
+* Gob 文件或流是完全自描述的：里面包含的所有类型都有一个对应的描述，并且总是可以用 Go 解码，而不需要了解文件的内容
+
+# Go 中的密码学
+* hash 包：实现了 adler32、crc32、crc64 和 fnv 校验；
+* crypto 包：实现了其它的 hash 算法，比如 md4、md5、sha1 等。以及完整地实现了 aes、blowfish、rc4、rsa、xtea 等加密算法。
