@@ -6,9 +6,20 @@ from flask import request
 import hashlib
 import time
 from requests import exceptions
+import math
+import random
 
 app = Flask(__name__)
 
+def randomString(pattern, length):
+    temp = []
+    for i in map(lambda x: pattern[math.floor(random.random() * len(pattern))], list(range(length))):
+        temp.append(i)
+    return ''.join(temp)
+
+jsessionid = randomString('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKMNOPQRSTUVWXYZ\\/+',176) + ':' + str(time.time())
+nuid = randomString('0123456789abcdefghijklmnopqrstuvwxyz',32)
+baseCookie='JSESSIONID-WYYY=' + str(jsessionid) + '; _iuqxldmzr_=32; _ntes_nnid=' + str(nuid) + ',' + str(time.time()) + '; _ntes_nuid=' + str(nuid)
 
 def createRequest(url, data, cookie):
     params = encrypted_request(data)
@@ -36,6 +47,7 @@ def createRequest(url, data, cookie):
     else:
         print('请求耗时%ss' % (end - start))
         if resp.status_code == 200:
+            print(resp.cookies)
             return resp
         else:
             resp.status_code = 502
@@ -51,7 +63,8 @@ def index(key):
     md5sum.update(password.encode(encoding='utf-8'))
     params = dict(
         phone="18680673675", password=md5sum.hexdigest(), rememberLogin=True)
-    cookie = request.cookies
+    cookie = baseCookie + ';' + request.cookies
+    print(cookie)
     print(request.cookies.__str__())
     resp = createRequest(url, params, cookie)
     return resp.text
