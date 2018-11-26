@@ -31,7 +31,6 @@ def createRequest(url, data, cookie):
         "Referer": "http://music.163.com",
         "Host": "music.163.com",
         "Cookie": cookie,
-        'Cookie': 'appver=1.5.6',
         "User-Agent": request.headers.get('User-Agent'),
     }
     try:
@@ -63,7 +62,7 @@ def index(key):
     md5sum.update(password.encode(encoding='utf-8'))
     params = dict(
         phone="18680673675", password=md5sum.hexdigest(), rememberLogin=True)
-    cookie = baseCookie + ';' + request.cookies
+    cookie = baseCookie + ';' + request.cookies.__str__()
     print(cookie)
     print(request.cookies.__str__())
     resp = createRequest(url, params, cookie)
